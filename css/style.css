@@ -1,0 +1,958 @@
+/* ==========================================================================
+   RAÍ MORAES — style.css
+   --------------------------------------------------------------------------
+   CAMADAS (do fundo para frente):
+     0    → html / body                        (preto puro)
+     1    → #video-background-container        (vídeo)
+     2    → .video-overlay                     (escurecimento uniforme leve)
+     3    → .hero-section::after               (degradê base)
+     5    → .hero-section                      (imagem do hero)
+     10   → .main-container                    (conteúdo)
+     15   → .cards-section                     (cards sobre o degradê base)
+     20   → .top-bar                           (logo + redes, sem faixa)
+     9999 → #age-modal                         (modal +18)
+   ========================================================================== */
+
+
+/* =========================================
+   1. VARIÁVEIS E RESET
+   ========================================= */
+:root {
+    --color-bg: #000000;
+    --color-text: #FFFFFF;
+    --color-text-muted: #D5D5D5;
+    --color-accent: #E50914;
+    --color-accent-light: #FF1A1A;
+    --color-overlay: rgba(0, 0, 0, 0.85);
+    --color-border-gray: rgba(180, 180, 180, 0.35);
+    --color-border-gray-strong: rgba(220, 220, 220, 0.6);
+
+    --spacing-xs: clamp(0.3rem, 0.6vw, 0.5rem);
+    --spacing-sm: clamp(0.5rem, 1vw, 0.7rem);
+    --spacing-md: clamp(0.7rem, 1.4vw, 1rem);
+    --spacing-lg: clamp(1rem, 2vw, 1.8rem);
+
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 50px;
+    --radius-circle: 50%;
+
+    --max-width-desktop: 1400px;
+    --scrollbar-compensation: 0px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    background-color: var(--color-bg);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.modal-active {
+    overflow: hidden;
+    padding-right: var(--scrollbar-compensation);
+    scrollbar-gutter: stable;
+}
+
+
+/* =========================================
+   2. VÍDEO DE FUNDO  (camada 1)
+   ========================================= */
+#video-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1;
+    overflow: hidden;
+    display: none;
+    background: #000000;
+    pointer-events: none;
+}
+
+#video-background-container.active {
+    display: block;
+}
+
+#video-background-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 1;
+    pointer-events: none;
+}
+
+
+/* =========================================
+   3. OVERLAY DO VÍDEO  (camada 2)
+   ========================================= */
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 2;
+    display: none;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.video-overlay.active {
+    display: block;
+}
+
+
+/* =========================================
+   4. ESTRUTURA PRINCIPAL  (camada 10)
+   ========================================= */
+.main-container {
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    padding: var(--spacing-xs);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    position: relative;
+    z-index: 10;
+}
+
+
+/* =========================================
+   5. TOPO (Logo + Redes)
+   ========================================= */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--spacing-xs) 0;
+}
+
+.logo {
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
+
+.logo:hover {
+    filter: brightness(1.1);
+}
+
+.top-socials {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-text);
+    border-radius: var(--radius-circle);
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+    opacity: 0.75;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================
+   6. HERO
+   ========================================= */
+.hero-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    background-color: transparent;
+}
+
+.hero-section picture {
+    display: block;
+    width: 100%;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-socials-overlay {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(8px, 1.5vw, 12px);
+    z-index: 2;
+}
+
+.hero-socials-overlay .social-link {
+    width: clamp(32px, 4vw, 40px);
+    height: clamp(32px, 4vw, 40px);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-socials-overlay .social-link svg {
+    width: clamp(16px, 2vw, 20px);
+    height: clamp(16px, 2vw, 20px);
+}
+
+
+/* =========================================
+   7. CARDS
+   ========================================= */
+.cards-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 0;
+}
+
+.cards-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    gap: 4px;
+}
+
+.card-item {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.card-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
+    pointer-events: none;
+}
+
+@media (hover: none) {
+    .card-item:active {
+        opacity: 0.85;
+    }
+}
+
+@media (hover: hover) {
+    .card-item:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(229, 9, 20, 0.2);
+    }
+    .card-item:hover img {
+        filter: brightness(1.08);
+    }
+    .card-item:focus-visible {
+        outline: 3px solid var(--color-text-muted);
+        outline-offset: 4px;
+    }
+}
+
+
+/* =========================================
+   8. RODAPÉ
+   ========================================= */
+.site-footer {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    margin-top: auto;
+    color: var(--color-text-muted);
+}
+
+.footer-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.footer-divider::before,
+.footer-divider::after {
+    content: '';
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--color-text-muted), transparent);
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+}
+
+
+/* =========================================
+   9. MODAL +18  (camada 9999)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        max(var(--spacing-md), env(safe-area-inset-top))
+        max(var(--spacing-md), env(safe-area-inset-right))
+        max(var(--spacing-md), env(safe-area-inset-bottom))
+        max(var(--spacing-md), env(safe-area-inset-left));
+
+    background: var(--color-overlay);
+
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+
+    opacity: 0;
+    visibility: hidden;
+
+    overscroll-behavior: contain;
+    isolation: isolate;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay[hidden] {
+    display: none !important;
+}
+
+.modal-overlay,
+.modal-container {
+    pointer-events: auto;
+}
+
+.modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: min(90vh, 90dvh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(180, 180, 180, 0.5) transparent;
+    padding: 48px 24px 28px;
+
+    background:
+        radial-gradient(120% 70% at 50% 0%,
+            rgba(229, 9, 20, 0.10) 0%,
+            transparent 55%),
+        linear-gradient(145deg, #0f1015 0%, #07080b 100%);
+
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-xl);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(180, 180, 180, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+    text-align: center;
+    isolation: isolate;
+}
+
+.modal-container::-webkit-scrollbar { width: 6px; }
+.modal-container::-webkit-scrollbar-track { background: transparent; }
+.modal-container::-webkit-scrollbar-thumb {
+    background: rgba(180, 180, 180, 0.4);
+    border-radius: 999px;
+}
+.modal-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 180, 180, 0.7);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-circle);
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus-visible {
+    background: rgba(229, 9, 20, 0.20);
+    border-color: var(--color-border-gray-strong);
+    color: #fff;
+    outline: none;
+}
+
+.modal-close-btn svg {
+    pointer-events: none;
+    display: block;
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#modal-title {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    border-radius: var(--radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #050505;
+    border: 1px solid var(--color-border-gray);
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #fff;
+    margin: 0 auto 20px;
+    box-shadow:
+        0 0 24px rgba(255, 255, 255, 0.06),
+        inset 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+#modal-title::before {
+    content: '';
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 22px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 18' fill='none' stroke='%23B8BCC4' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 15.5 L2 6 L8 10 L12 3 L16 10 L22 6 L21 15.5 Z'/%3E%3Cpath d='M3 15.5 H21'/%3E%3Ccircle cx='12' cy='2.4' r='0.9' fill='%23B8BCC4'/%3E%3Ccircle cx='2' cy='4.8' r='0.9' fill='%23B8BCC4'/%3E%3Ccircle cx='22' cy='4.8' r='0.9' fill='%23B8BCC4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+}
+
+.modal-subtitle {
+    font-family: 'Playfair Display', 'Times New Roman', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 12px;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+}
+
+.modal-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0 0 26px;
+    max-width: 300px;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.modal-btn-primary {
+    background: linear-gradient(135deg, #FF1A1A 0%, #CC0000 100%);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(200, 200, 200, 0.35);
+    box-shadow:
+        0 4px 20px rgba(230, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.modal-btn-primary:hover,
+.modal-btn-primary:focus-visible {
+    filter: brightness(1.12);
+    border-color: var(--color-border-gray-strong);
+    box-shadow:
+        0 6px 26px rgba(230, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+.modal-btn-secondary {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 6px;
+    padding: 12px;
+    border: 1px solid var(--color-border-gray);
+}
+
+.modal-btn-secondary:hover,
+.modal-btn-secondary:focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-border-gray-strong);
+    outline: none;
+}
+
+.modal-footer-note {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(180, 180, 180, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.modal-footer-note span {
+    color: var(--color-accent);
+    font-size: 16px;
+    line-height: 1;
+}
+
+.modal-footer-note p {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================
+   10. MOBILE (até 639px)
+   --------------------------------------------------
+   Cards ocupam 82% da viewport, gap de 2px.
+   ========================================= */
+@media (max-width: 639px) {
+    .top-bar {
+        display: none;
+    }
+
+    .hero-socials-overlay {
+        bottom: 6%;
+        gap: clamp(8px, 2vw, 12px);
+    }
+
+    .hero-socials-overlay .social-link {
+        width: clamp(28px, 8vw, 36px);
+        height: clamp(28px, 8vw, 36px);
+    }
+
+    .hero-socials-overlay .social-link svg {
+        width: clamp(14px, 4vw, 18px);
+        height: clamp(14px, 4vw, 18px);
+    }
+
+    .cards-grid {
+        max-width: 82vw;
+        margin: 0 auto;
+        gap: 2px;
+    }
+
+    .card-item {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================
+   11. TABLET (640px – 999px)
+   --------------------------------------------------
+   Grid de 2 colunas. Com 6 cards, forma
+   3 linhas perfeitas (2 + 2 + 2). Gap
+   levemente reduzido.
+   ========================================= */
+@media (min-width: 640px) and (max-width: 999px) {
+    .top-bar {
+        display: none;
+    }
+
+    .hero-socials-overlay {
+        bottom: 7%;
+        gap: clamp(10px, 1.5vw, 14px);
+    }
+
+    .hero-socials-overlay .social-link {
+        width: clamp(34px, 4.5vw, 42px);
+        height: clamp(34px, 4.5vw, 42px);
+    }
+
+    .hero-socials-overlay .social-link svg {
+        width: clamp(16px, 2vw, 20px);
+        height: clamp(16px, 2vw, 20px);
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(6px, 1vw, 12px);
+        max-width: min(720px, 92vw);
+        margin: 0 auto;
+        justify-items: center;
+    }
+
+    .card-item {
+        max-width: clamp(220px, 44vw, 320px);
+    }
+
+    /* ❌ REMOVIDA a regra especial do :nth-child(5)
+       que centralizava o 5º card na linha inteira.
+       Agora com 6 cards, o grid de 2 colunas
+       distribui automaticamente em 3 linhas de 2. */
+
+    .site-footer {
+        padding: var(--spacing-lg) 0;
+    }
+}
+
+
+/* =========================================
+   12. DESKTOP (1000px+)
+   --------------------------------------------------
+   • body preto cobre tudo
+   • vídeo aparece por cima do preto (z-index 1)
+   • overlay uniforme em z-index 2
+   • .hero-section em z-index 5 com degradê base
+     (::after) para ancorar os cards
+   • imagem do hero com object-fit: contain
+     (não corta as laterais)
+   • CARDS GRANDES: grid até 1300px, card até
+     430px de largura com trava em 40vh para
+     não engolir o hero em telas baixas
+   • SEM faixa topo — logo e redes ficam sobre a
+     imagem do hero diretamente
+   • 6 cards em 2 LINHAS DE 3 (layout simétrico)
+   ========================================= */
+@media (min-width: 1000px) {
+    body {
+        overflow: hidden;
+        background-color: #000000;
+    }
+
+    .main-container {
+        padding: 0;
+        gap: 0;
+        min-height: 100vh;
+        max-width: 100%;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* ---- TOP BAR (sobre a imagem do hero) ---- */
+    .top-bar {
+        display: flex;
+        position: absolute;
+        top: clamp(16px, 2.5vh, 32px);
+        left: clamp(20px, 3vw, 50px);
+        right: clamp(20px, 3vw, 50px);
+        z-index: 20;
+        padding: 0;
+    }
+
+    .logo {
+        max-width: clamp(110px, 11vw, 150px);
+    }
+
+    .top-socials {
+        gap: clamp(8px, 1.2vw, 16px);
+    }
+
+    .top-socials .social-link {
+        width: clamp(32px, 2.8vw, 42px);
+        height: clamp(32px, 2.8vw, 42px);
+    }
+
+    .top-socials .social-link svg {
+        width: clamp(16px, 1.6vw, 20px);
+        height: clamp(16px, 1.6vw, 20px);
+    }
+
+    /* ---- HERO (camada 5) ---- */
+    .hero-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        z-index: 5;
+    }
+
+    /* DEGRADÊ BASE — ancora os cards e destaca o rodapé */
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 38vh;
+        background: linear-gradient(
+            to top,
+            #000 0%,
+            #000 26%,
+            rgba(0, 0, 0, 0.88) 46%,
+            rgba(0, 0, 0, 0.55) 66%,
+            rgba(0, 0, 0, 0.2) 83%,
+            transparent 100%
+        );
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .hero-section picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        object-position: center center;
+        display: block;
+    }
+
+    .hero-socials-overlay {
+        display: none;
+    }
+
+    /* ---- CARDS (sobre o degradê base) ---- */
+    .cards-section {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 0 clamp(24px, 5vw, 60px) 3vh;
+        z-index: 15;
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: clamp(10px, 1.2vw, 16px);
+        max-width: min(1300px, 94vw);
+        margin: 0 auto;
+        justify-items: center;
+    }
+
+    .card-item {
+        max-width: clamp(200px, 30vw, min(430px, 40vh));
+    }
+
+    /* ---- LINHA 1 — cards 1, 2 e 3 ---- */
+    .card-item:nth-child(1) { grid-column: 1 / 3; }
+    .card-item:nth-child(2) { grid-column: 3 / 5; }
+    .card-item:nth-child(3) { grid-column: 5 / 7; }
+
+    /* ---- LINHA 2 — cards 4, 5 e 6 (alinhados com a linha 1) ---- */
+    .card-item:nth-child(4) { grid-column: 1 / 3; }
+    .card-item:nth-child(5) { grid-column: 3 / 5; }
+    .card-item:nth-child(6) { grid-column: 5 / 7; }
+
+    .site-footer {
+        display: none;
+    }
+}
+
+
+/* =========================================
+   13. TELAS BAIXAS (≥ 640px e altura ≤ 520px)
+   ========================================= */
+@media (min-width: 640px) and (max-height: 520px) {
+    .hero-socials-overlay {
+        bottom: 4%;
+    }
+
+    .hero-socials-overlay .social-link {
+        width: clamp(28px, 3.6vw, 36px);
+        height: clamp(28px, 3.6vw, 36px);
+    }
+
+    .cards-grid {
+        gap: clamp(6px, 1vw, 10px);
+    }
+
+    .card-item {
+        max-width: clamp(180px, 38vw, 260px);
+    }
+}
+
+
+/* =========================================
+   14. RESPONSIVIDADE EXTRA DO MODAL
+   ========================================= */
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: var(--spacing-sm);
+    }
+
+    .modal-container {
+        max-width: 100%;
+        max-height: min(88vh, 88dvh);
+        padding: 44px 18px 24px;
+    }
+
+    .modal-subtitle {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-container {
+        padding: 40px 14px 20px;
+    }
+
+    #modal-title {
+        width: 74px;
+        height: 74px;
+        font-size: 28px;
+    }
+
+    #modal-title::before {
+        top: -22px;
+        width: 28px;
+        height: 18px;
+    }
+
+    .modal-subtitle {
+        font-size: 17px;
+    }
+
+    .modal-description {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================
+   15. FORÇA FUNDO PRETO ABAIXO DE 1000px
+   --------------------------------------------------
+   Camada de segurança em CSS: mesmo se o JS falhar
+   ou for desativado, o site volta ao preto sólido
+   quando a viewport é menor que 1000px.
+   ========================================= */
+@media (max-width: 999px) {
+    html,
+    body {
+        background-color: #000000 !important;
+    }
+
+    #video-background-container,
+    .video-overlay {
+        display: none !important;
+    }
+}
+
+
+/* =========================================
+   16. ACESSIBILIDADE
+   ========================================= */
+:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    .modal-overlay {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(0, 0, 0, 0.95);
+    }
+}

@@ -1,0 +1,80 @@
+# ============================================================
+# robots.txt — Raiane Leite
+# ============================================================
+
+# Google pode indexar (queremos aparecer em buscas)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing também
+User-agent: Bingbot
+Allow: /
+
+# ------------------------------------------------------------
+# Robôs do Meta (Instagram, Facebook, WhatsApp)
+# ------------------------------------------------------------
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: facebot
+Disallow: /
+
+# ------------------------------------------------------------
+# Outros previews sociais que podem vazar conteúdo
+# ------------------------------------------------------------
+User-agent: Twitterbot
+Disallow: /
+
+User-agent: TelegramBot
+Disallow: /
+
+User-agent: WhatsApp
+Disallow: /
+
+User-agent: LinkedInBot
+Disallow: /
+
+User-agent: Pinterestbot
+Disallow: /
+
+User-agent: Discordbot
+Disallow: /
+
+User-agent: Slackbot
+Disallow: /
+
+# ------------------------------------------------------------
+# Scrapers de IA
+# ------------------------------------------------------------
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# ------------------------------------------------------------
+# Qualquer outro bot: bloqueado por padrão
+# ------------------------------------------------------------
+User-agent: *
+Disallow: /
+
+# Sitemap (opcional, ajuda o Google)
+Sitemap: https://seu-dominio-aqui.com/sitemap.xml
