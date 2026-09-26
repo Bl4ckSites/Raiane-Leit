@@ -15,13 +15,13 @@ const CONFIG = {
         tiktok:    'https://www.tiktok.com/@rayane.leit'
     },
     cards: [
-        { 
-            id: 'privacy', 
-            name: 'Privacy', 
-            image: 'cards/card1.webp', 
-            urlChunks: ['nN==', 'YmcmpUE0', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'], 
-            requiresAgeCheck: true 
-        },
+         {
+            id: 'privacy',
+            name: 'Privacy',
+            image: 'cards/card1.webp',
+            urlChunks: ['nN==', 'YmcmpUE0', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
+            requiresAgeCheck: true
+       },
         { 
             id: 'vip', 
             name: 'Telegram VIP', 
