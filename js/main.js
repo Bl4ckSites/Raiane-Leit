@@ -16,12 +16,12 @@ const CONFIG = {
         tiktok:    'https://www.tiktok.com/@rayane.leit'
     },
     cards: [
-        { id: 'privacy',     name: 'Privacy',       image: 'cards/privacy.webp',       url: 'http://privacy.com.br/@Rayanne_leite',   requiresAgeCheck: true },
-        { id: 'vip',         name: 'Telegram VIP',  image: 'cards/telegram-vip.webp',  url: 'https://t.me/RaiLeite_bot',              requiresAgeCheck: true },
-        { id: 'exclusivos',  name: 'Exclusivos',    image: 'cards/exclusivos.webp',    url: 'https://linkpriv.app/raianeleite',       requiresAgeCheck: true },
-        { id: 'onlyfans',    name: 'OnlyFans',      image: 'cards/onlyfans.webp',      url: 'https://onlyfans.com/rayane.leit',       requiresAgeCheck: true },
-        { id: 'fatalfans',        name: 'Fatal Fans', image: 'cards/fatalfans.webp', url: 'https://fatalfans.com/raiane_leite',              requiresAgeCheck: true },
-        { id: 'free',        name: 'Telegram Free', image: 'cards/telegram-free.webp', url: 'https://t.me/Rayane_leite',              requiresAgeCheck: true }
+        { id: 'privacy',     name: 'Privacy',       image: 'cards/card1.webp',       url: 'http://privacy.com.br/@Rayanne_leite',   requiresAgeCheck: true },
+        { id: 'vip',         name: 'Telegram VIP',  image: 'cards/card2.webp',  url: 'https://t.me/RaiLeite_bot',              requiresAgeCheck: true },
+        { id: 'exclusivos',  name: 'Exclusivos',    image: 'cards/card3.webp',    url: 'https://linkpriv.app/raianeleite',       requiresAgeCheck: true },
+        { id: 'onlyfans',    name: 'OnlyFans',      image: 'cards/card4.webp',      url: 'https://onlyfans.com/rayane.leit',       requiresAgeCheck: true },
+        { id: 'fatalfans',        name: 'Fatal Fans', image: 'cards/card5.webp', url: 'https://fatalfans.com/raiane_leite',              requiresAgeCheck: true },
+        { id: 'free',        name: 'Telegram Free', image: 'cards/card6.webp', url: 'https://t.me/Rayane_leite',              requiresAgeCheck: true }
     ],
     video: { src: 'imgs/desktop-background.mp4', breakpoint: 1000 }
 };
