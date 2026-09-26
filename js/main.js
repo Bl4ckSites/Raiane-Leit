@@ -1,7 +1,6 @@
 /* ==========================================================================
-   RAÍ MORAES — main.js
+   RAÍ MORAES — main.js (FASE 1: SEGURANÇA E OFUSCAÇÃO APLICADA)
    ========================================================================== */
-
 'use strict';
 
 /* =============================================================
@@ -16,12 +15,48 @@ const CONFIG = {
         tiktok:    'https://www.tiktok.com/@rayane.leit'
     },
     cards: [
-        { id: 'privacy',     name: 'Privacy',       image: 'cards/card1.webp',       url: 'http://privacy.com.br/@Rayanne_leite',   requiresAgeCheck: true },
-        { id: 'vip',         name: 'Telegram VIP',  image: 'cards/card2.webp',  url: 'https://t.me/RaiLeite_bot',              requiresAgeCheck: true },
-        { id: 'exclusivos',  name: 'Exclusivos',    image: 'cards/card3.webp',    url: 'https://linkpriv.app/raianeleite',       requiresAgeCheck: true },
-        { id: 'onlyfans',    name: 'OnlyFans',      image: 'cards/card4.webp',      url: 'https://onlyfans.com/rayane.leit',       requiresAgeCheck: true },
-        { id: 'fatalfans',        name: 'Fatal Fans', image: 'cards/card5.webp', url: 'https://fatalfans.com/raiane_leite',              requiresAgeCheck: true },
-        { id: 'free',        name: 'Telegram Free', image: 'cards/card6.webp', url: 'https://t.me/Rayane_leite',              requiresAgeCheck: true }
+        { 
+            id: 'privacy', 
+            name: 'Privacy', 
+            image: 'cards/card1.webp', 
+            urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'], 
+            requiresAgeCheck: true 
+        },
+        { 
+            id: 'vip', 
+            name: 'Telegram VIP', 
+            image: 'cards/card2.webp', 
+            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'nJIZnJSF', 'qT9vK2I0'], 
+            requiresAgeCheck: true 
+        },
+        { 
+            id: 'exclusivos', 
+            name: 'Exclusivos', 
+            image: 'cards/card3.webp', 
+            urlChunks: ['qTt=', 'Yl86p3O0', 'paOeozyf', 'pUOuYaMc', 'ozScLKVi', 'MKEcMJky'], 
+            requiresAgeCheck: true 
+        },
+        { 
+            id: 'onlyfans', 
+            name: 'OnlyFans', 
+            image: 'cards/card4.webp', 
+            urlChunks: ['qTt=', 'Yl86p3O0', 'LJM5oT5i', 'oJ9wYaAh', 'ozS5LKVi', 'qTyyoP5y'], 
+            requiresAgeCheck: true 
+        },
+        { 
+            id: 'fatalfans', 
+            name: 'Fatal Fans', 
+            image: 'cards/card5.webp', 
+            urlChunks: ['pUE0nN==', 'LJLiYmcm', 'ozSzoTS0', 'Y21iLl5m', 'MJ5unJSl', 'MKEcMJks'], 
+            requiresAgeCheck: true 
+        },
+        { 
+            id: 'free', 
+            name: 'Telegram Free', 
+            image: 'cards/card6.webp', 
+            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'MJ5urJSF', 'MKEcMJks'], 
+            requiresAgeCheck: true 
+        }
     ],
     video: { src: 'imgs/desktop-background.mp4', breakpoint: 1000 }
 };
@@ -31,6 +66,27 @@ const TIMINGS = {
     FADE_MS:     300,
     RIPPLE_MS:   600
 };
+
+/* =============================================================
+   DECODE HELPER (Reverte a ofuscação apenas na memória, no clique)
+============================================================= */
+function decodeUrl(chunks) {
+    try {
+        // 1. Reverter a ordem do array e juntar
+        const reversed = [...chunks].reverse().join('');
+        
+        // 2. Reverter ROT13
+        const rot13Decoded = reversed.replace(/[a-zA-Z]/g, c => 
+            String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)
+        );
+        
+        // 3. Decodificar Base64 e reverter a string final
+        return atob(rot13Decoded).split('').reverse().join('');
+    } catch (e) {
+        console.error('[Security] Falha na decodificação da URL');
+        return '#';
+    }
+}
 
 /* =============================================================
    ÁUDIO — som de clique sintético
@@ -169,7 +225,9 @@ function renderCards() {
     CONFIG.cards.forEach((card, index) => {
         const cardElement = document.createElement('a');
         cardElement.className = 'card-item';
-        cardElement.href = card.url;
+        
+        // SEGURANÇA: href é sempre '#'. A URL real só é decodificada no clique.
+        cardElement.href = '#'; 
         cardElement.setAttribute('role', 'button');
         cardElement.setAttribute('aria-label', `Acessar ${card.name}`);
         cardElement.style.setProperty('--card-index', index);
@@ -198,7 +256,9 @@ function renderCards() {
         cardElement.appendChild(img);
 
         attachTapHandler(cardElement, () => {
-            handleCardClick(card.url, card.requiresAgeCheck, cardElement);
+            // Decodifica a URL apenas no momento exato do clique
+            const realUrl = decodeUrl(card.urlChunks);
+            handleCardClick(realUrl, card.requiresAgeCheck, cardElement);
         });
 
         container.appendChild(cardElement);
