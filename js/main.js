@@ -19,7 +19,7 @@ const CONFIG = {
             id: 'privacy', 
             name: 'Privacy', 
             image: 'cards/card1.webp', 
-            urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'], 
+            urlChunks: ['nN==', 'YmcmpUE0', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'], 
             requiresAgeCheck: true 
         },
         { 
