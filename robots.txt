@@ -2,16 +2,19 @@
 # robots.txt — Raiane Leite
 # ============================================================
 
-# Google pode indexar (queremos aparecer em buscas)
+# Google pode indexar a página de texto, mas NÃO as imagens
 User-agent: Googlebot
 Allow: /
 
 User-agent: Googlebot-Image
-Allow: /
+Disallow: /
 
-# Bing também
+# Bing também pode indexar a página, mas não as imagens
 User-agent: Bingbot
 Allow: /
+
+User-agent: Bingbot-Image
+Disallow: /
 
 # ------------------------------------------------------------
 # Robôs do Meta (Instagram, Facebook, WhatsApp)
@@ -76,5 +79,5 @@ Disallow: /
 User-agent: *
 Disallow: /
 
-# Sitemap (opcional, ajuda o Google)
-Sitemap: https://seu-dominio-aqui.com/sitemap.xml
+# Sitemap (URL corrigida para o seu domínio real)
+Sitemap: https://raianeleite.com/sitemap.xml
