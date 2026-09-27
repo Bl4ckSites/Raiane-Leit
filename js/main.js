@@ -19,7 +19,7 @@ const CONFIG = {
     id: 'privacy',
     name: 'Privacy',
     image: 'cards/card1.webp',
-    urlChunks: ['nN==', 'YmcmpUE0', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
+    urlChunks: ['http://privacy.com.br/@Rayanne_leite'],
     requiresAgeCheck: true
 },
         { 
