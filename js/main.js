@@ -14,12 +14,11 @@ const CONFIG = {
         facebook:  'https://www.facebook.com/share/18UeksBW8A',
         tiktok:    'https://www.tiktok.com/@rayane.leit'
     },
-    cards: [
-        {
+    {
     id: 'privacy',
     name: 'Privacy',
     image: 'cards/card1.webp',
-    urlChunks: ['http://privacy.com.br/@Rayanne_leite'],
+    urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
     requiresAgeCheck: true
 },
         { 
