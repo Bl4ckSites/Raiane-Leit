@@ -14,47 +14,48 @@ const CONFIG = {
         facebook:  'https://www.facebook.com/share/18UeksBW8A',
         tiktok:    'https://www.tiktok.com/@rayane.leit'
     },
-    {
-    id: 'privacy',
-    name: 'Privacy',
-    image: 'cards/card1.webp',
-    urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
-    requiresAgeCheck: true
-},
-        { 
-            id: 'vip', 
-            name: 'Telegram VIP', 
-            image: 'cards/card2.webp', 
-            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'nJIZnJSF', 'qT9vK2I0'], 
-            requiresAgeCheck: true 
+    cards: [
+        {
+            id: 'privacy',
+            name: 'Privacy',
+            image: 'cards/card1.webp',
+            urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
+            requiresAgeCheck: true
         },
-        { 
-            id: 'exclusivos', 
-            name: 'Exclusivos', 
-            image: 'cards/card3.webp', 
-            urlChunks: ['qTt=', 'Yl86p3O0', 'paOeozyf', 'pUOuYaMc', 'ozScLKVi', 'MKEcMJky'], 
-            requiresAgeCheck: true 
+        {
+            id: 'vip',
+            name: 'Telegram VIP',
+            image: 'cards/card2.webp',
+            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'nJIZnJSF', 'qT9vK2I0'],
+            requiresAgeCheck: true
         },
-        { 
-            id: 'onlyfans', 
-            name: 'OnlyFans', 
-            image: 'cards/card4.webp', 
-            urlChunks: ['qTt=', 'Yl86p3O0', 'LJM5oT5i', 'oJ9wYaAh', 'ozS5LKVi', 'qTyyoP5y'], 
-            requiresAgeCheck: true 
+        {
+            id: 'exclusivos',
+            name: 'Exclusivos',
+            image: 'cards/card3.webp',
+            urlChunks: ['qTt=', 'Yl86p3O0', 'paOeozyf', 'pUOuYaMc', 'ozScLKVi', 'MKEcMJky'],
+            requiresAgeCheck: true
         },
-        { 
-            id: 'fatalfans', 
-            name: 'Fatal Fans', 
-            image: 'cards/card5.webp', 
-            urlChunks: ['pUE0nN==', 'LJLiYmcm', 'ozSzoTS0', 'Y21iLl5m', 'MJ5unJSl', 'MKEcMJks'], 
-            requiresAgeCheck: true 
+        {
+            id: 'onlyfans',
+            name: 'OnlyFans',
+            image: 'cards/card4.webp',
+            urlChunks: ['qTt=', 'Yl86p3O0', 'LJM5oT5i', 'oJ9wYaAh', 'ozS5LKVi', 'qTyyoP5y'],
+            requiresAgeCheck: true
         },
-        { 
-            id: 'free', 
-            name: 'Telegram Free', 
-            image: 'cards/card6.webp', 
-            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'MJ5urJSF', 'MKEcMJks'], 
-            requiresAgeCheck: true 
+        {
+            id: 'fatalfans',
+            name: 'Fatal Fans',
+            image: 'cards/card5.webp',
+            urlChunks: ['pUE0nN==', 'LJLiYmcm', 'ozSzoTS0', 'Y21iLl5m', 'MJ5unJSl', 'MKEcMJks'],
+            requiresAgeCheck: true
+        },
+        {
+            id: 'free',
+            name: 'Telegram Free',
+            image: 'cards/card6.webp',
+            urlChunks: ['nN==', 'YmcmpUE0', 'Y2IgYaDi', 'MJ5urJSF', 'MKEcMJks'],
+            requiresAgeCheck: true
         }
     ],
     video: { src: 'imgs/desktop-background.mp4', breakpoint: 1000 }
@@ -73,12 +74,12 @@ function decodeUrl(chunks) {
     try {
         // 1. Reverter a ordem do array e juntar
         const reversed = [...chunks].reverse().join('');
-        
+
         // 2. Reverter ROT13
-        const rot13Decoded = reversed.replace(/[a-zA-Z]/g, c => 
+        const rot13Decoded = reversed.replace(/[a-zA-Z]/g, c =>
             String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)
         );
-        
+
         // 3. Decodificar Base64 e reverter a string final
         return atob(rot13Decoded).split('').reverse().join('');
     } catch (e) {
@@ -192,7 +193,7 @@ function attachTapHandler(element, handler) {
 
         e.preventDefault();
         run({ clientX: t.clientX, clientY: t.clientY, currentTarget: element, target: e.target });
-    });
+    }, { passive: false });
 
     element.addEventListener('click', (e) => {
         e.preventDefault();
@@ -224,9 +225,9 @@ function renderCards() {
     CONFIG.cards.forEach((card, index) => {
         const cardElement = document.createElement('a');
         cardElement.className = 'card-item';
-        
+
         // SEGURANÇA: href é sempre '#'. A URL real só é decodificada no clique.
-        cardElement.href = '#'; 
+        cardElement.href = '#';
         cardElement.setAttribute('role', 'button');
         cardElement.setAttribute('aria-label', `Acessar ${card.name}`);
         cardElement.style.setProperty('--card-index', index);
@@ -272,7 +273,7 @@ function handleCardClick(url, requiresCheck, cardElement) {
         }, { once: true });
     }
 
-    if (requiresCheck) {
+    if (requiresCheck && typeof window.triggerAgeModal === 'function') {
         window.triggerAgeModal(url);
     } else {
         window.location.href = url;
@@ -300,6 +301,7 @@ function initModal() {
     }
 
     const openModal = () => {
+        clearTimeout(closeTimer);
         previouslyFocusedElement = document.activeElement;
         calculateScrollbarWidth();
 
@@ -457,7 +459,7 @@ function initDesktopVideo() {
 
     const checkDesktop = () => {
         const isDesktop = window.matchMedia(`(min-width: ${CONFIG.video.breakpoint}px)`).matches;
-        const hasVideo  = container.hasChildNodes();
+        const hasVideo  = !!container.querySelector('video');
 
         if (isDesktop && !hasVideo) {
             createVideo();
@@ -482,4 +484,4 @@ function initDesktopVideo() {
             tryPlay(currentVideo);
         }
     });
-}
+            }
