@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RAÍ MORAES — main.js (FASE 1: SEGURANÇA E OFUSCAÇÃO APLICADA)
+   RAÍ MORAES — main.js
    ========================================================================== */
 'use strict';
 
@@ -19,7 +19,7 @@ const CONFIG = {
             id: 'privacy',
             name: 'Privacy',
             image: 'cards/card1.webp',
-            urlChunks: ['YmcjqUEb', 'LKMcpaNi', 'oJ9wYayw', 'HxNipzVh', 'MJ5hLKyu', 'MKEcMJks'],
+            url: 'http://privacy.com.br/@Rayanne_leite',
             requiresAgeCheck: true
         },
         {
@@ -68,24 +68,29 @@ const TIMINGS = {
 };
 
 /* =============================================================
-   DECODE HELPER (Reverte a ofuscação apenas na memória, no clique)
+   RESOLVE URL — usa url direta se existir, senão decodifica chunks
 ============================================================= */
 function decodeUrl(chunks) {
     try {
-        // 1. Reverter a ordem do array e juntar
+        if (!Array.isArray(chunks) || chunks.length === 0) return '#';
+
         const reversed = [...chunks].reverse().join('');
 
-        // 2. Reverter ROT13
         const rot13Decoded = reversed.replace(/[a-zA-Z]/g, c =>
             String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26)
         );
 
-        // 3. Decodificar Base64 e reverter a string final
         return atob(rot13Decoded).split('').reverse().join('');
     } catch (e) {
         console.error('[Security] Falha na decodificação da URL');
         return '#';
     }
+}
+
+function resolveCardUrl(card) {
+    if (typeof card.url === 'string' && card.url.length > 0) return card.url;
+    if (Array.isArray(card.urlChunks)) return decodeUrl(card.urlChunks);
+    return '#';
 }
 
 /* =============================================================
@@ -226,7 +231,7 @@ function renderCards() {
         const cardElement = document.createElement('a');
         cardElement.className = 'card-item';
 
-        // SEGURANÇA: href é sempre '#'. A URL real só é decodificada no clique.
+        // SEGURANÇA: href é sempre '#'. A URL real só é resolvida no clique.
         cardElement.href = '#';
         cardElement.setAttribute('role', 'button');
         cardElement.setAttribute('aria-label', `Acessar ${card.name}`);
@@ -256,8 +261,7 @@ function renderCards() {
         cardElement.appendChild(img);
 
         attachTapHandler(cardElement, () => {
-            // Decodifica a URL apenas no momento exato do clique
-            const realUrl = decodeUrl(card.urlChunks);
+            const realUrl = resolveCardUrl(card);
             handleCardClick(realUrl, card.requiresAgeCheck, cardElement);
         });
 
@@ -272,6 +276,8 @@ function handleCardClick(url, requiresCheck, cardElement) {
             cardElement.classList.remove('card-pulse');
         }, { once: true });
     }
+
+    if (url === '#' || !url) return;
 
     if (requiresCheck && typeof window.triggerAgeModal === 'function') {
         window.triggerAgeModal(url);
@@ -484,4 +490,4 @@ function initDesktopVideo() {
             tryPlay(currentVideo);
         }
     });
-            }
+}
