@@ -68,6 +68,24 @@ const TIMINGS = {
 };
 
 /* =============================================================
+   GA4 — rastreamento de cliques nos cards
+   Envia o evento "select_content" com o parâmetro "card_name".
+   O parâmetro é lido no GA4 por uma Dimensão Personalizada
+   de escopo "Evento" chamada "Card Name".
+============================================================= */
+function trackCardClick(cardName, cardId, destinationUrl) {
+    if (typeof window.gtag !== 'function') return;
+
+    window.gtag('event', 'select_content', {
+        content_type:    'card_link',
+        content_id:      cardId || cardName,
+        card_name:       cardName,
+        card_id:         cardId || cardName,
+        destination_url: destinationUrl || ''
+    });
+}
+
+/* =============================================================
    RESOLVE URL — usa url direta se existir, senão decodifica chunks
 ============================================================= */
 function decodeUrl(chunks) {
@@ -262,14 +280,14 @@ function renderCards() {
 
         attachTapHandler(cardElement, () => {
             const realUrl = resolveCardUrl(card);
-            handleCardClick(realUrl, card.requiresAgeCheck, cardElement);
+            handleCardClick(realUrl, card, cardElement);
         });
 
         container.appendChild(cardElement);
     });
 }
 
-function handleCardClick(url, requiresCheck, cardElement) {
+function handleCardClick(url, card, cardElement) {
     if (cardElement && !prefersReducedMotion.matches) {
         cardElement.classList.add('card-pulse');
         cardElement.addEventListener('animationend', () => {
@@ -277,9 +295,15 @@ function handleCardClick(url, requiresCheck, cardElement) {
         }, { once: true });
     }
 
+    // Se a URL não foi resolvida, não faz nada
     if (url === '#' || !url) return;
 
-    if (requiresCheck && typeof window.triggerAgeModal === 'function') {
+    // === RASTREAMENTO GA4 ===
+    // Registra o clique no botão assim que o usuário toca nele,
+    // independentemente de confirmar a idade depois.
+    trackCardClick(card.name, card.id, url);
+
+    if (card.requiresAgeCheck && typeof window.triggerAgeModal === 'function') {
         window.triggerAgeModal(url);
     } else {
         window.location.href = url;
