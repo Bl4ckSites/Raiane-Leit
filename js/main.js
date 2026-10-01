@@ -19,7 +19,7 @@ const CONFIG = {
             id: 'privacy',
             name: 'Privacy',
             image: 'cards/card1.webp',
-            url: 'http://privacy.com.br/@Rayanne_leite',
+            url: 'https://privacy.com.br/checkout/Rayanne_leite',
             requiresAgeCheck: true
         },
         {
